@@ -1,0 +1,16 @@
+<div class="pagination-controls">
+  <span>Page</span>
+  <input type="number" [ngModel]="paginationInfo.currentPage" (ngModelChange)="onPageChange($event)" min="1" [max]="paginationInfo.totalPages">
+  <span>of {{ paginationInfo.totalPages }}</span>
+
+  <select [ngModel]="paginationInfo.pageSize" (ngModelChange)="pageSizeChange.emit($event)">
+    @for (size of pageSizes; track size) {
+      <option [value]="size">{{ size }}</option>
+    }
+  </select>
+
+  <button (click)="onPageChange(1)" [disabled]="paginationInfo.currentPage === 1">«</button>
+  <button (click)="onPageChange(paginationInfo.currentPage - 1)" [disabled]="paginationInfo.currentPage === 1">‹</button>
+  <button (click)="onPageChange(paginationInfo.currentPage + 1)" [disabled]="paginationInfo.currentPage === paginationInfo.totalPages">›</button>
+  <button (click)="onPageChange(paginationInfo.totalPages)" [disabled]="paginationInfo.currentPage === paginationInfo.totalPages">»</button>
+</div>

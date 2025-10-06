@@ -1,0 +1,22 @@
+<div class="filter-modal">
+  @switch (columnType) {
+    @case ('text') {
+      <input type="text" [(ngModel)]="filterValue" placeholder="Filter...">
+    }
+    @case ('date') {
+      <div class="date-range">
+        <input type="date" [(ngModel)]="filterValue" placeholder="From">
+        <input type="date" [(ngModel)]="filterValueTo" placeholder="To">
+      </div>
+    }
+    @case ('select') {
+      <!-- Multi-select checkboxes will be implemented here -->
+      <p>Select filter not yet implemented.</p>
+    }
+  }
+
+  <div class="filter-actions">
+    <button (click)="onClear()" class="btn-secondary">Clear</button>
+    <button (click)="onApply()" class="btn-primary">Apply</button>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="quick-search-container">
+  <label for="quick-search">Quick Search:</label>
+  <select id="quick-search" (change)="onSelect($event)">
+    <option value="" disabled selected>Select an option</option>
+    @for (option of quickSearchOptions; track option.name) {
+      <option [value]="option.name">{{ option.name }}</option>
+    }
+  </select>
+</div>

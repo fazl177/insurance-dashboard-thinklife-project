@@ -1,0 +1,67 @@
+<form [formGroup]="form" class="search-form" (ngSubmit)="onSearch()">
+  <div class="row">
+    <input formControlName="quickSearch" placeholder="Quick Search..." />
+    <button type="submit">Search</button>
+    <button type="button" (click)="onReset()">Reset</button>
+    <div class="export-btns">
+      <button type="button" (click)="exportCSV()">Export CSV</button>
+      <button type="button" (click)="exportJSON()">Export JSON</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <input formControlName="claimantName" placeholder="Claimant Name" />
+    <input formControlName="ssn" placeholder="SSN (123-45-6789)" />
+    <input formControlName="claimNumber" placeholder="Claim #" />
+    <input formControlName="incidentDateFrom" type="date" />
+    <input formControlName="incidentDateTo" type="date" />
+    <input formControlName="lossState" placeholder="Loss State" />
+    <input formControlName="program" placeholder="Program" />
+    <input formControlName="insuranceType" placeholder="Insurance Type" />
+    <input formControlName="examiner" placeholder="Examiner" />
+    <input formControlName="policyNumber" placeholder="Policy #" />
+
+    <div class="orgs" formArrayName="organizations">
+      <div class="org-item" *ngFor="let ctrl of organizations.controls; let i = index">
+        <input [formControlName]="i" placeholder="Organization" />
+        <button type="button" *ngIf="organizations.length > 1" (click)="removeOrganization(i)">Remove</button>
+      </div>
+      <button type="button" *ngIf="organizations.length < 4" (click)="addOrganization()">Add Organization</button>
+    </div>
+  </div>
+</form>
+
+<table class="data-table" *ngIf="claims().length > 0">
+  <thead>
+    <tr>
+      <th (click)="sort('claimNumber')">Claim #</th>
+      <th (click)="sort('claimantId')">Claimant ID</th>
+      <th>Suffix</th>
+      <th (click)="sort('claimantName')">Claimant Name</th>
+      <th (click)="sort('incidentDate')">Incident Date</th>
+      <th (click)="sort('status')">Status</th>
+      <th>Insured</th>
+      <th>Examiner</th>
+      <th>SSN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let claim of claims(); trackBy: trackByClaimNumber">
+      <td>{{ claim.claimNumber }}</td>
+      <td>{{ claim.claimantId }}</td>
+      <td>{{ claim.suffix }}</td>
+      <td>{{ claim.claimantName }}</td>
+      <td>{{ claim.incidentDate | date }}</td>
+      <td>{{ claim.status }}</td>
+      <td>{{ claim.insured }}</td>
+      <td>{{ claim.examiner }}</td>
+      <td>{{ claim.ssn }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination" *ngIf="totalResults() > 0">
+  <button (click)="prevPage()" [disabled]="page() <= 1">Previous</button>
+  <span>Page {{ page() }}</span>
+  <button (click)="nextPage()">Next</button>
+</div>

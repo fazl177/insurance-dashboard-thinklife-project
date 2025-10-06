@@ -1,0 +1,181 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+
+# Large files and binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.dat
+*.data
+*.db
+*.sql
+*.sqlite
+*.sqlite3
+*.p12
+*.pem
+*.crt
+*.key
+*.pfx
+*.der
+*.bin
+*.msi
+*.msm
+*.msp
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+
+# Development tools and caches
+.tools/
+.vs/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Angular
+dist/
+tmp/
+out-tsc/
+.angular/cache
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Java/Maven
+target/
+build/
+!mvnw
+!mvnw.cmd
+
+# Java error logs
+hs_err_pid*.log
+replay_pid*.log
+
+# Logs
+logs/
+*.log
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+bin/
+.metadata/
+
+# Build output
+build/
+
+# Local development
+*.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# Spring Boot specific
+application-*.properties
+!application.properties
+!application-example.properties
+
+# Database files
+*.h2.db
+*.lock
+*.lob
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Media files (consider using Git LFS if needed)
+*.mp4
+*.mov
+*.avi
+*.wmv
+*.flv
+*.mkv
+*.webm
+*.mp3
+*.wav
+*.wma
+*.aac
+*.flac
+*.ogg
+*.m4a
+
+# Project working directory
+project working/
+
+# Images (consider using Git LFS if needed)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.ico
+*.psd
+*.ai
+*.eps
+*.svg
+
+# Documents (consider using Git LFS if needed)
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.odt
+*.ods
+*.odp
+
+# Archives
+*.7z
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.iso
+*.dmg
+*.pkg
+*.deb
+*.rpm
+
+# Temporary and large files
+*.zip
+*.rar

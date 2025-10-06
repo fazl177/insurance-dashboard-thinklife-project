@@ -1,0 +1,44 @@
+.typeahead-container {
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+
+  .loading-indicator {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--font-size-sm, 12px);
+    color: var(--text-muted, #ADB5BD);
+  }
+
+  .options-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary, #FFFFFF);
+    border: 1px solid var(--border-color, #DEE2E6);
+    border-radius: var(--border-radius, 4px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1000;
+
+    li {
+      padding: var(--spacing-sm, 8px);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--bg-hover, #E9ECEF);
+      }
+    }
+  }
+
+  .no-results {
+    padding: var(--spacing-sm, 8px);
+    color: var(--text-muted, #ADB5BD);
+  }
+}

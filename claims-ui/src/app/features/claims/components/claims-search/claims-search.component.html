@@ -1,0 +1,4 @@
+<div class="claims-search-container">
+  <app-claims-search-form (search)="onSearch($event)" (reset)="onReset()"></app-claims-search-form>
+  <app-claims-data-table [claims]="claims()" [loading]="loading()" [pagination]="pagination()"></app-claims-data-table>
+</div>

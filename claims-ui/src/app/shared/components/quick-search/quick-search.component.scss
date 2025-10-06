@@ -1,0 +1,16 @@
+.quick-search-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+
+  label {
+    font-weight: 600;
+  }
+
+  select {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color, #DEE2E6);
+    border-radius: var(--border-radius, 4px);
+    font-size: var(--font-size-base, 14px);
+  }
+}

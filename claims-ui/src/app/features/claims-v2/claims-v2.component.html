@@ -1,0 +1,268 @@
+<section class="claims v2-container">
+  <!-- Top action/nav bar (skeleton for now) -->
+  <header class="top-bar">
+    <div class="left">
+      <button mat-button class="tab active">Search</button>
+      <button mat-button class="tab">Batch Approval</button>
+      <button mat-button class="tab">Document Search</button>
+      <button mat-button class="tab">New Mail</button>
+      <button mat-button class="tab">Parking Lot</button>
+      <button mat-button class="tab">Rules Configuration</button>
+      <button mat-button class="tab">Link Documents</button>
+      <button mat-button class="tab">DMS Admin</button>
+    </div>
+    <div class="right">
+      <!-- user menu placeholder -->
+      <mat-icon>account_circle</mat-icon>
+    </div>
+  </header>
+
+  <!-- Search Form -->
+  <form [formGroup]="form" class="search-form" (ngSubmit)="search()">
+    <div class="quick-row">
+      <label>Quick Search:</label>
+      <mat-form-field appearance="outline" class="compact-field">
+        <mat-select formControlName="quickSearch" placeholder="select">
+          <mat-option value="">select</mat-option>
+          <mat-option value="open">All Open Claims</mat-option>
+          <mat-option value="my">My Claims</mat-option>
+          <mat-option value="recent">Recent Updates</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-grid">
+      <!-- Row 1 -->
+      <div class="form-field-group">
+        <span class="compact-label">Claimant Name:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="First" formControlName="claimantFirstName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Last" formControlName="claimantLastName" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Claim Number:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput formControlName="claimNumber" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">From Incident Date:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="MM/DD/YYYY" formControlName="incidentDateFrom" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">To Incident Date:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="MM/DD/YYYY" formControlName="incidentDateTo" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">SSN:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="XXX-XX-XXXX" formControlName="ssn" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Status:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <mat-select multiple formControlName="status" placeholder="Open, Re-Op, Closed">
+            <mat-option value="Open">Open</mat-option>
+            <mat-option value="Reopen">Re-Open</mat-option>
+            <mat-option value="Closed">Closed</mat-option>
+            <mat-option value="Pending">Pending</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-field-group">
+        <span class="compact-label">Employee Number:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="employeeNumber" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Affiliate Claim Number:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="affiliateClaimNumber" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Examiner:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="examiner" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Employer:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="employer" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Program:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="program" />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-field-group">
+        <span class="compact-label">Claimant Type:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <mat-select formControlName="claimantType" placeholder="select"></mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Organization1:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <mat-select formControlName="org1" placeholder="select"></mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Organization2:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <mat-select formControlName="org2" placeholder="select"></mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Jurisdiction Claim Number:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="jurisdictionClaimNumber" />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-field-group">
+        <span class="compact-label">Broker Name:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <mat-select formControlName="brokerName" placeholder="select"></mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Email Id:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="emailId" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">Phone Number:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="Search" formControlName="phoneNumber" />
+        </mat-form-field>
+      </div>
+      <div class="form-field-group">
+        <span class="compact-label">DOB:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <input matInput placeholder="MM/DD/YYYY" formControlName="dob" />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="form-field-group">
+        <span class="compact-label">Adjusting Office:</span>
+        <mat-form-field appearance="outline" class="compact-field">
+          <mat-select formControlName="adjustingOffice" placeholder="select"></mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons-section">
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" class="search-btn" type="submit" [disabled]="loading()">
+          <mat-icon>search</mat-icon> Search
+        </button>
+        <button mat-stroked-button class="reset-btn" type="button" (click)="reset()" [disabled]="loading()">
+          <mat-icon>refresh</mat-icon> Reset
+        </button>
+        <button mat-stroked-button class="download-btn" type="button" [disabled]="items().length === 0" [matMenuTriggerFor]="downloadMenu">
+          <mat-icon>download</mat-icon> Download
+        </button>
+        <mat-menu #downloadMenu="matMenu">
+          <button mat-menu-item (click)="export('csv')"><mat-icon>description</mat-icon> CSV</button>
+          <button mat-menu-item (click)="export('xlsx')"><mat-icon>table_chart</mat-icon> Excel</button>
+          <button mat-menu-item (click)="export('json')"><mat-icon>data_object</mat-icon> JSON</button>
+        </mat-menu>
+      </div>
+    </div>
+  </form>
+
+  <!-- Results -->
+  <div class="results-container">
+    @if (loading()) {
+      <div class="loading-overlay">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else if (items().length === 0) {
+      <div class="empty-state">
+        <mat-icon>search_off</mat-icon>
+        <h3>No claims found matching your criteria</h3>
+        <button mat-stroked-button color="primary" (click)="reset()">Clear Filters</button>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>SELECT</th>
+              <th (click)="toggleSort('claimNumber')">CLAIM</th>
+              <th (click)="toggleSort('claimId')">CLAIM ID</th>
+              <th (click)="toggleSort('adjOffice')">ADJ OFFICE</th>
+              <th (click)="toggleSort('claimantName')">CLAIMANT</th>
+              <th>SSN</th>
+              <th (click)="toggleSort('status')">STATUS</th>
+              <th (click)="toggleSort('incidentDate')">INCIDENT DATE</th>
+              <th (click)="toggleSort('type')">TYPE</th>
+              <th (click)="toggleSort('brokerName')">BROKER NAME</th>
+              <th (click)="toggleSort('insured')">INSURED</th>
+              <th (click)="toggleSort('injuryType')">INJURYTYPE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of items(); trackBy: trackByClaimId">
+              <td><mat-checkbox></mat-checkbox></td>
+              <td class="claim-link">{{ c.claimNumber }}</td>
+              <td>{{ c.claimId }}</td>
+              <td>{{ c.adjOffice }}</td>
+              <td>{{ c.claimantName }}</td>
+              <td>{{ c.ssn }}</td>
+              <td>{{ c.status }}</td>
+              <td>{{ c.incidentDate | date:'shortDate' }}</td>
+              <td>{{ c.type }}</td>
+              <td>{{ c.brokerName }}</td>
+              <td>{{ c.insured }}</td>
+              <td>{{ c.injuryType }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination-wrapper">
+          <div class="pagination-info">
+            Showing {{ showingFrom() }} to {{ showingTo() }} of {{ totalItems() }} entries
+          </div>
+          <div class="pagination-controls">
+            <button mat-button (click)="pageChange(currentPage()-1)" [disabled]="currentPage() <= 1">« Prev</button>
+            <span>Page</span>
+            <input [value]="currentPage()" (change)="onPageInput($event)" />
+            <span>of {{ totalPages() }}</span>
+            <button mat-button (click)="pageChange(currentPage()+1)" [disabled]="currentPage()*pageSize() >= totalItems()">Next »</button>
+
+            <mat-form-field appearance="outline" class="page-size-field">
+              <mat-select [value]="pageSize()" (selectionChange)="pageSize.set($event.value); currentPage.set(1); search()">
+                <mat-option [value]="20">20</mat-option>
+                <mat-option [value]="50">50</mat-option>
+                <mat-option [value]="100">100</mat-option>
+                <mat-option [value]="200">200</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,18 @@
+<div class="typeahead-container">
+  <input
+    type="text"
+    [ngModel]="value"
+    (input)="onSearch($event)"
+    (blur)="onTouched()"
+    placeholder="Type to search..."
+  />
+  <div *ngIf="loading" class="loading-indicator">Loading...</div>
+  <ul *ngIf="options.length > 0" class="options-list">
+    <li *ngFor="let option of options" (click)="onSelect(option)">
+      {{ option.name }}
+    </li>
+  </ul>
+  <div *ngIf="!loading && searchTerm().length >= 2 && options.length === 0" class="no-results">
+    No results found
+  </div>
+</div>

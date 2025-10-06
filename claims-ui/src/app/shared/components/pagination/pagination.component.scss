@@ -1,0 +1,36 @@
+.pagination-controls {
+  display: flex;
+  gap: var(--spacing-sm, 8px);
+  align-items: center;
+
+  button {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color, #DEE2E6);
+    background: white;
+    border-radius: var(--border-radius, 4px);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: var(--bg-hover, #E9ECEF);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  input {
+    width: 60px;
+    text-align: center;
+    padding: 6px;
+    border: 1px solid var(--border-color, #DEE2E6);
+    border-radius: var(--border-radius, 4px);
+  }
+
+  select {
+    padding: 6px;
+    border: 1px solid var(--border-color, #DEE2E6);
+    border-radius: var(--border-radius, 4px);
+  }
+}

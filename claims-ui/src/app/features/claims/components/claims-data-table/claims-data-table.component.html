@@ -1,0 +1,192 @@
+<div class="claims-data-table">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 50px;">
+            <input type="checkbox" (change)="onSelectAll()" [checked]="selectedRows().size === claims().length && claims().length > 0">
+          </th>
+          <th style="width: 120px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('claimNumber')">
+                CLAIM
+                <span class="sort-icon" [class.active]="sortColumn() === 'claimNumber'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('claimNumber')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'claimNumber') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('claimNumber', $event)" (clearFilter)="onClearFilter('claimNumber')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 100px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('claimId')">
+                CLAIM ID
+                <span class="sort-icon" [class.active]="sortColumn() === 'claimId'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('claimId')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'claimId') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('claimId', $event)" (clearFilter)="onClearFilter('claimId')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 120px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('adjOffice')">
+                ADJ OFFICE
+                <span class="sort-icon" [class.active]="sortColumn() === 'adjOffice'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('adjOffice')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'adjOffice') {
+              <app-column-filter-modal class="filter-popup" columnType="select" (applyFilter)="onApplyFilter('adjOffice', $event)" (clearFilter)="onClearFilter('adjOffice')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 180px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('claimantName')">
+                CLAIMANT
+                <span class="sort-icon" [class.active]="sortColumn() === 'claimantName'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('claimantName')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'claimantName') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('claimantName', $event)" (clearFilter)="onClearFilter('claimantName')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 110px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('ssn')">
+                SSN
+                <span class="sort-icon" [class.active]="sortColumn() === 'ssn'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('ssn')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'ssn') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('ssn', $event)" (clearFilter)="onClearFilter('ssn')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 90px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('status')">
+                STATUS
+                <span class="sort-icon" [class.active]="sortColumn() === 'status'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('status')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'status') {
+              <app-column-filter-modal class="filter-popup" columnType="select" (applyFilter)="onApplyFilter('status', $event)" (clearFilter)="onClearFilter('status')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 120px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('incidentDate')">
+                INCIDENT DATE
+                <span class="sort-icon" [class.active]="sortColumn() === 'incidentDate'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('incidentDate')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'incidentDate') {
+              <app-column-filter-modal class="filter-popup" columnType="date" (applyFilter)="onApplyFilter('incidentDate', $event)" (clearFilter)="onClearFilter('incidentDate')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 100px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('type')">
+                TYPE
+                <span class="sort-icon" [class.active]="sortColumn() === 'type'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('type')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'type') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('type', $event)" (clearFilter)="onClearFilter('type')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 150px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('brokerName')">
+                BROKER NAME
+                <span class="sort-icon" [class.active]="sortColumn() === 'brokerName'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('brokerName')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'brokerName') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('brokerName', $event)" (clearFilter)="onClearFilter('brokerName')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 180px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('insured')">
+                INSURED
+                <span class="sort-icon" [class.active]="sortColumn() === 'insured'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('insured')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'insured') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('insured', $event)" (clearFilter)="onClearFilter('insured')"></app-column-filter-modal>
+            }
+          </th>
+          <th style="width: 120px;">
+            <div class="header-content">
+              <span class="sortable" (click)="onSort('injuryType')">
+                INJURYTYPE
+                <span class="sort-icon" [class.active]="sortColumn() === 'injuryType'">⇅</span>
+              </span>
+              <span class="filter-icon" (click)="toggleFilter('injuryType')">⚙</span>
+            </div>
+            @if (activeFilterColumn() === 'injuryType') {
+              <app-column-filter-modal class="filter-popup" columnType="text" (applyFilter)="onApplyFilter('injuryType', $event)" (clearFilter)="onClearFilter('injuryType')"></app-column-filter-modal>
+            }
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (claim of claims(); track claim.claimId) {
+          <tr [class.selected]="selectedRows().has(claim.claimId)">
+            <td>
+              <input type="checkbox" (change)="onSelectRow(claim.claimId)" [checked]="selectedRows().has(claim.claimId)">
+            </td>
+            <td class="claim-link"><a [routerLink]="['/claim', claim.claimNumber]">{{ claim.claimNumber }}</a></td>
+            <td>{{ claim.claimId }}</td>
+            <td>{{ claim.adjOffice }}</td>
+            <td>{{ claim.claimantName }}</td>
+            <td>{{ formatSSN(claim.ssn) }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusBadgeClass(claim.status)">{{ claim.status }}</span>
+            </td>
+            <td>{{ formatDate(claim.incidentDate) }}</td>
+            <td>{{ claim.type }}</td>
+            <td>{{ claim.brokerName }}</td>
+            <td>{{ claim.insured }}</td>
+            <td>{{ claim.injuryType }}</td>
+          </tr>
+        }
+        @if (loading()) {
+          <tr>
+            <td colspan="12" class="loading-state">Loading...</td>
+          </tr>
+        }
+        @if (!loading() && claims().length === 0) {
+          <tr>
+            <td colspan="12" class="empty-state">No claims found matching your criteria.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination-wrapper">
+    <div class="pagination-left">
+      <button class="settings-btn" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Settings
+      </button>
+    </div>
+    <div class="pagination-info">
+      Showing {{ pagination().currentPage * pagination().pageSize - pagination().pageSize + 1 }} to {{ pagination().currentPage * pagination().pageSize }} of {{ pagination().totalItems }} entries
+    </div>
+    <app-pagination [paginationInfo]="pagination()" (pageChange)="store.changePage($event)"></app-pagination>
+  </div>
+</div>

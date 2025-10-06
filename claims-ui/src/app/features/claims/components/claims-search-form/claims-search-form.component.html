@@ -1,0 +1,143 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="claims-search-form">
+  <!-- Quick Search Row -->
+  <div class="form-row quick-search-row">
+    <div class="form-group">
+      <label for="quickSearch">Quick Search:</label>
+      <app-quick-search (searchSelected)="onQuickSearchSelected($event)"></app-quick-search>
+    </div>
+    <div class="form-group">
+      <label>Claimant Name:</label>
+      <div class="name-inputs">
+        <input formControlName="claimantFirstName" placeholder="First">
+        <input formControlName="claimantLastName" placeholder="Last">
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 1 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="claimNumber">Claim Number:</label>
+      <input id="claimNumber" formControlName="claimNumber" placeholder="Search">
+    </div>
+    <div class="form-group">
+      <label for="fromIncidentDate">From Incident Date:</label>
+      <input id="fromIncidentDate" formControlName="incidentDateFrom" type="date" placeholder="MM/DD/YYYY">
+    </div>
+    <div class="form-group">
+      <label for="toIncidentDate">To Incident Date:</label>
+      <input id="toIncidentDate" formControlName="incidentDateTo" type="date" placeholder="MM/DD/YYYY">
+    </div>
+    <div class="form-group">
+      <label for="ssn">SSN:</label>
+      <input id="ssn" formControlName="ssn" placeholder="XXX-XX-XXXX">
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" formControlName="status" multiple>
+        @for (option of statusOptions$ | async; track option.code) {
+          <option [value]="option.code">{{ option.description }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="employeeNumber">Employee Number:</label>
+      <input id="employeeNumber" formControlName="employeeNumber" placeholder="Search">
+    </div>
+    <div class="form-group">
+      <label for="affiliateClaimNumber">Affiliate Claim Number:</label>
+      <input id="affiliateClaimNumber" formControlName="affiliateClaimNumber" placeholder="Search">
+    </div>
+    <div class="form-group">
+      <label for="examiner">Examiner:</label>
+      <app-typeahead formControlName="examiner" entity="examiner" placeholder="Search"></app-typeahead>
+    </div>
+    <div class="form-group">
+      <label for="employer">Employer:</label>
+      <app-typeahead formControlName="employer" entity="employer" placeholder="Search"></app-typeahead>
+    </div>
+    <div class="form-group">
+      <label for="program">Program:</label>
+      <app-typeahead formControlName="program" entity="program" placeholder="Search"></app-typeahead>
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="claimantType">Claimant Type:</label>
+      <select id="claimantType" formControlName="claimantType">
+        @for (option of claimantTypeOptions$ | async; track option.code) {
+          <option [value]="option.code">{{ option.description }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="organization1">Organization1:</label>
+      <select id="organization1" formControlName="organization1">
+        @for (option of organizationOptions$ | async; track option.code) {
+          <option [value]="option.code">{{ option.description }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="organization2">Organization2:</label>
+      <select id="organization2" formControlName="organization2">
+        @for (option of organizationOptions$ | async; track option.code) {
+          <option [value]="option.code">{{ option.description }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="jurisdictionClaimNumber">Jurisdiction Claim Number:</label>
+      <input id="jurisdictionClaimNumber" formControlName="jurisdictionClaimNumber" placeholder="Search">
+    </div>
+  </div>
+
+  <!-- Row 4 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="brokerName">Broker Name:</label>
+      <select id="brokerName" formControlName="brokerName">
+        @for (option of brokerOptions$ | async; track option.code) {
+          <option [value]="option.code">{{ option.description }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="emailId">Email Id:</label>
+      <input id="emailId" formControlName="emailId" placeholder="Search">
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number:</label>
+      <input id="phoneNumber" formControlName="phoneNumber" placeholder="Search">
+    </div>
+    <div class="form-group">
+      <label for="dob">DOB:</label>
+      <input id="dob" formControlName="dob" type="date" placeholder="MM/DD/YYYY">
+    </div>
+  </div>
+
+  <!-- Row 5 -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="adjustingOffice">Adjusting Office:</label>
+      <select id="adjustingOffice" formControlName="adjustingOffice">
+        @for (option of adjustingOfficeOptions$ | async; track option.code) {
+          <option [value]="option.code">{{ option.description }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <button type="submit" class="btn-primary">Search</button>
+    <button type="button" (click)="onReset()" class="btn-secondary">Reset</button>
+    <button type="button" class="btn-secondary">Download</button>
+  </div>
+</form>

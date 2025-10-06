@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-size: 13px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        /* Navigation Header */
+        .nav-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .nav-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+        }
+        
+        .nav-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .nav-btn.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        /* Search Form */
+        .search-container {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 16px;
+        }
+        
+        .search-row {
+            display: flex;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 8px;
+        }
+        
+        .search-field {
+            display: flex;
+            flex-direction: column;
+            min-width: 120px;
+        }
+        
+        .search-field label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+        
+        .search-field input, .search-field select {
+            padding: 4px 6px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 12px;
+            height: 24px;
+        }
+        
+        .search-field input:focus, .search-field select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        
+        .status-filters {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .status-filters label {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .status-filters input {
+            margin-right: 4px;
+        }
+        
+        .search-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .search-btn {
+            padding: 4px 12px;
+            border: 1px solid #007bff;
+            background: #007bff;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            height: 24px;
+        }
+        
+        .search-btn:hover {
+            background: #0056b3;
+        }
+        
+        .reset-btn {
+            padding: 4px 12px;
+            border: 1px solid #6c757d;
+            background: #6c757d;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            height: 24px;
+        }
+        
+        .reset-btn:hover {
+            background: #545b62;
+        }
+        
+        /* Results Table */
+        .results-container {
+            background: white;
+            height: calc(100vh - 140px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .results-header {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .table-container {
+            flex: 1;
+            overflow: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 6px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            font-weight: 600;
+            font-size: 11px;
+            color: #333;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th:hover {
+            background: #e9ecef;
+        }
+        
+        td {
+            padding: 4px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            border-right: 1px solid #f0f0f0;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        
+        .status-badge {
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-open { background-color: #d1f2eb; color: #0e5739; }
+        .status-closed { background-color: #fadbd8; color: #922b21; }
+        .status-pending { background-color: #fef9e7; color: #7d6608; }
+        .status-reopened { background-color: #d4edda; color: #155724; }
+        
+        /* Footer/Pagination */
+        .results-footer {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .pagination {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .page-btn {
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 11px;
+            border-radius: 2px;
+        }
+        
+        .page-btn:hover {
+            background: #f8f9fa;
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 10px;
+            font-size: 12px;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="nav-header">
+            <div class="nav-buttons">
+                <button class="nav-btn active">Search Claims</button>
+                <button class="nav-btn">Reports</button>
+                <button class="nav-btn">Settings</button>
+            </div>
+        </div>
+        
+        <!-- Search Form -->
+        <div class="search-container">
+            <div class="search-row">
+                <div class="search-field">
+                    <label>Claim Number</label>
+                    <input type="text" id="claimNumber" placeholder="Enter claim number">
+                </div>
+                
+                <div class="search-field">
+                    <label>Claimant Name</label>
+                    <input type="text" id="claimantName" placeholder="Enter claimant name">
+                </div>
+                
+                <div class="search-field">
+                    <label>SSN</label>
+                    <input type="text" id="ssn" placeholder="XXX-XX-XXXX">
+                </div>
+                
+                <div class="search-field">
+                    <label>Examiner</label>
+                    <input type="text" id="examiner" placeholder="Enter examiner">
+                </div>
+                
+                <div class="search-field">
+                    <label>From Date</label>
+                    <input type="date" id="fromDate">
+                </div>
+                
+                <div class="search-field">
+                    <label>To Date</label>
+                    <input type="date" id="toDate">
+                </div>
+                
+                <div class="search-actions">
+                    <button class="search-btn" onclick="searchClaims()">Search</button>
+                    <button class="reset-btn" onclick="resetForm()">Reset</button>
+                </div>
+            </div>
+            
+            <div class="search-row">
+                <div class="status-filters">
+                    <label>Status:</label>
+                    <label><input type="checkbox" value="Open" class="status-filter"> Open</label>
+                    <label><input type="checkbox" value="Closed" class="status-filter"> Closed</label>
+                    <label><input type="checkbox" value="Pending" class="status-filter"> Pending</label>
+                    <label><input type="checkbox" value="Reopened" class="status-filter"> Reopened</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div class="results-container">
+            <div class="results-header">
+                <span>Claims Search Results</span>
+                <span id="resultsCount">Loading...</span>
+            </div>
+            
+            <div id="loadingIndicator" class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading claims data...
+            </div>
+            
+            <div id="errorMessage" class="error" style="display: none;"></div>
+            
+            <div class="table-container" id="tableContainer" style="display: none;">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('claimNumber')">Claim Number</th>
+                            <th onclick="sortTable('claimantId')">Claimant ID</th>
+                            <th onclick="sortTable('claimantSuffix')">Suffix</th>
+                            <th onclick="sortTable('claimantName')">Claimant Name</th>
+                            <th onclick="sortTable('incidentDateStr')">Incident Date</th>
+                            <th onclick="sortTable('status')">Status</th>
+                            <th onclick="sortTable('insured')">Insured</th>
+                            <th onclick="sortTable('examiner')">Examiner</th>
+                            <th onclick="sortTable('ssn')">SSN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="results-footer" id="resultsFooter" style="display: none;">
+                <div id="recordsInfo">Showing 0 - 0 of 0 records</div>
+                <div class="pagination">
+                    <button class="page-btn" onclick="changePage(-1)" id="prevBtn">Previous</button>
+                    <button class="page-btn" onclick="changePage(1)" id="nextBtn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        let pageSize = 25;
+        let sortColumn = '';
+        let sortDirection = 'asc';
+        
+        // API Configuration
+        const API_BASE = 'http://localhost:8080/api';
+        
+        // Load initial data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllClaims();
+        });
+        
+        // Load all claims from backend
+        async function loadAllClaims() {
+            try {
+                showLoading(true);
+                const response = await fetch(`${API_BASE}/fetchMyqueue?pageSize=100`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                currentData = data.data || [];
+                filteredData = [...currentData];
+                
+                updateResultsDisplay();
+                showLoading(false);
+                
+            } catch (error) {
+                console.error('Error loading claims:', error);
+                showError('Failed to load claims data. Please check if the backend is running on port 8080.');
+                showLoading(false);
+            }
+        }
+        
+        // Search claims with filters
+        async function searchClaims() {
+            try {
+                showLoading(true);
+                
+                // Get form values
+                const filters = getSearchFilters();
+                
+                // Build query parameters
+                const params = new URLSearchParams();
+                if (filters.claimantName) params.append('claimantName', filters.claimantName);
+                if (filters.claimNumber) params.append('claimNumber', filters.claimNumber);
+                if (filters.ssn) params.append('ssn', filters.ssn);
+                if (filters.examiner) params.append('examiner', filters.examiner);
+                if (filters.dolStart) params.append('dolStart', filters.dolStart);
+                if (filters.dolEnd) params.append('dolEnd', filters.dolEnd);
+                
+                // Add status filters
+                filters.status.forEach(status => params.append('status', status));
+                
+                params.append('pageSize', '100');
+                
+                const response = await fetch(`${API_BASE}/fetchMyqueue?${params}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                currentData = data.data || [];
+                filteredData = [...currentData];
+                currentPage = 1;
+                
+                updateResultsDisplay();
+                showLoading(false);
+                
+            } catch (error) {
+                console.error('Error searching claims:', error);
+                showError('Failed to search claims. Please try again.');
+                showLoading(false);
+            }
+        }
+        
+        // Get search filters from form
+        function getSearchFilters() {
+            const claimantName = document.getElementById('claimantName').value.trim();
+            const claimNumber = document.getElementById('claimNumber').value.trim();
+            const ssn = document.getElementById('ssn').value.trim();
+            const examiner = document.getElementById('examiner').value.trim();
+            const fromDate = document.getElementById('fromDate').value;
+            const toDate = document.getElementById('toDate').value;
+            
+            // Get selected status checkboxes
+            const statusCheckboxes = document.querySelectorAll('.status-filter:checked');
+            const status = Array.from(statusCheckboxes).map(cb => cb.value);
+            
+            return {
+                claimantName,
+                claimNumber,
+                ssn,
+                examiner,
+                dolStart: fromDate,
+                dolEnd: toDate,
+                status
+            };
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('claimantName').value = '';
+            document.getElementById('claimNumber').value = '';
+            document.getElementById('ssn').value = '';
+            document.getElementById('examiner').value = '';
+            document.getElementById('fromDate').value = '';
+            document.getElementById('toDate').value = '';
+            
+            // Uncheck all status filters
+            document.querySelectorAll('.status-filter').forEach(cb => cb.checked = false);
+            
+            // Reload all data
+            loadAllClaims();
+        }
+        
+        // Update results display
+        function updateResultsDisplay() {
+            const tbody = document.getElementById('resultsBody');
+            const tableContainer = document.getElementById('tableContainer');
+            const footer = document.getElementById('resultsFooter');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            // Show total count
+            resultsCount.textContent = `${filteredData.length} records found`;
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="no-data">No claims found matching your search criteria</td></tr>';
+                tableContainer.style.display = 'block';
+                footer.style.display = 'none';
+                return;
+            }
+            
+            // Apply sorting
+            if (sortColumn) {
+                filteredData.sort((a, b) => {
+                    let aVal = a[sortColumn] || '';
+                    let bVal = b[sortColumn] || '';
+                    
+                    if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+                    if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+                    
+                    if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            }
+            
+            // Pagination
+            const totalPages = Math.ceil(filteredData.length / pageSize);
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = Math.min(startIndex + pageSize, filteredData.length);
+            const pageData = filteredData.slice(startIndex, endIndex);
+            
+            // Generate table rows
+            tbody.innerHTML = pageData.map(claim => `
+                <tr>
+                    <td>${claim.claimNumber || ''}</td>
+                    <td>${claim.claimantId || ''}</td>
+                    <td>${claim.claimantSuffix || ''}</td>
+                    <td>${claim.claimantName || ''}</td>
+                    <td>${claim.incidentDateStr || ''}</td>
+                    <td><span class="status-badge status-${(claim.status || '').toLowerCase()}">${claim.status || ''}</span></td>
+                    <td>${claim.insured || ''}</td>
+                    <td>${claim.examiner || ''}</td>
+                    <td>${claim.ssn || ''}</td>
+                </tr>
+            `).join('');
+            
+            // Update footer info
+            document.getElementById('recordsInfo').textContent = 
+                `Showing ${startIndex + 1} - ${endIndex} of ${filteredData.length} records`;
+            
+            // Update pagination buttons
+            document.getElementById('prevBtn').disabled = currentPage <= 1;
+            document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+            
+            tableContainer.style.display = 'block';
+            footer.style.display = 'flex';
+        }
+        
+        // Sort table
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+            
+            updateResultsDisplay();
+        }
+        
+        // Change page
+        function changePage(direction) {
+            const totalPages = Math.ceil(filteredData.length / pageSize);
+            const newPage = currentPage + direction;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                updateResultsDisplay();
+            }
+        }
+        
+        // Show/hide loading indicator
+        function showLoading(show) {
+            document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+            document.getElementById('tableContainer').style.display = show ? 'none' : 'block';
+            document.getElementById('resultsFooter').style.display = show ? 'none' : 'flex';
+        }
+        
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

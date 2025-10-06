@@ -1,0 +1,221 @@
+/* CSS Variables for theming */
+:root {
+  --primary-color: #4A90E2;
+  --primary-hover: #357ABD;
+  --success-color: #28A745;
+  --danger-color: #DC3545;
+  --warning-color: #FFC107;
+  --info-color: #17A2B8;
+
+  --text-primary: #212529;
+  --text-secondary: #6C757D;
+  --text-muted: #ADB5BD;
+
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-hover: #E9ECEF;
+  --bg-selected: #E3F2FD;
+
+  --border-color: #DEE2E6;
+  --border-radius: 4px;
+
+  --table-header-bg: #4A6278;
+  --table-header-text: #FFFFFF;
+  --table-row-even: #FFFFFF;
+  --table-row-odd: #F9FAFB;
+  --table-row-hover: #F1F3F5;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+}
+
+:host {
+  display: block;
+}
+
+.claims-data-table {
+  background: var(--bg-primary, #FFFFFF);
+  border-radius: var(--border-radius, 4px);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .table-wrapper {
+    overflow-x: auto;
+    max-height: calc(100vh - 400px);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+
+        th {
+          position: relative; // Needed for filter popover positioning
+          background: var(--table-header-bg, #4A6278);
+          color: var(--table-header-text, #FFFFFF);
+          padding: 12px 16px;
+          text-align: left;
+          font-weight: 600;
+          font-size: var(--font-size-sm, 12px);
+          text-transform: uppercase;
+          white-space: nowrap;
+          border-bottom: 2px solid var(--border-color, #DEE2E6);
+
+          .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .sortable {
+            cursor: pointer;
+          }
+
+          .filter-icon {
+            cursor: pointer;
+          }
+
+          .filter-popup {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+          }
+
+          .sort-icon {
+            margin-left: var(--spacing-xs, 4px);
+            cursor: pointer;
+            opacity: 0.5;
+            font-size: 12px;
+
+            &.active {
+              opacity: 1;
+              color: var(--primary-color, #4A90E2);
+            }
+          }
+
+          .filter-icon {
+            margin-left: var(--spacing-xs, 4px);
+            cursor: pointer;
+            opacity: 0.7;
+            font-size: 12px;
+
+            &:hover {
+              opacity: 1;
+              color: var(--primary-color, #4A90E2);
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background: var(--table-row-even, #FFFFFF);
+          }
+
+          &:nth-child(odd) {
+            background: var(--table-row-odd, #F9FAFB);
+          }
+
+          &:hover {
+            background: var(--table-row-hover, #F1F3F5);
+          }
+
+          &.selected {
+            background: var(--bg-selected, #E3F2FD);
+          }
+
+          td {
+            padding: 12px 16px;
+            font-size: var(--font-size-base, 14px);
+            border-bottom: 1px solid var(--border-color, #DEE2E6);
+
+            &.claim-link a {
+              color: var(--primary-color, #4A90E2);
+              text-decoration: underline;
+              cursor: pointer;
+
+              &:hover {
+                color: var(--primary-hover, #357ABD);
+              }
+            }
+
+            .status-badge {
+              display: inline-block;
+              padding: 4px 8px;
+              border-radius: 12px;
+              font-size: var(--font-size-sm, 12px);
+              font-weight: 600;
+
+              &.status-open {
+                background: #D4EDDA;
+                color: #155724;
+              }
+
+              &.status-reopen {
+                background: #F8D7DA;
+                color: #721C24;
+              }
+
+              &.status-closed {
+                background: #E2E3E5;
+                color: #383D41;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md, 16px);
+    border-top: 1px solid var(--border-color, #DEE2E6);
+
+    .pagination-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .settings-btn {
+      background: var(--secondary-color, #6C757D);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--border-radius, 4px);
+      font-size: var(--font-size-sm, 12px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs, 4px);
+      transition: background 0.2s;
+
+      &:hover {
+        background: #5A6268;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .pagination-info {
+      font-size: var(--font-size-sm, 12px);
+      color: var(--text-secondary, #6C757D);
+    }
+  }
+}
